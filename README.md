@@ -28,7 +28,7 @@ _Note: the country in suggested layout is found at the end of this document_
 | GET    | /population/size?people= | Return the countries that have a population equal to or greater than the given population     |
 | GET    | /population/min          | Return the country with the smallest population                                               |
 | GET    | /population/max          | Return the country with the largest population                                                |
-| GET    | /age/age?age=            | Return the countries that have a median age equal to or greater than the given population     |
+| GET    | /age/age?age=            | Return the countries that have a median age equal to or greater than the given age     |
 | GET    | /age/min                 | Return the country with the smallest median age                                               |
 | GET    | /age/max                 | Return the country the the greatest median age                                                |  
 
