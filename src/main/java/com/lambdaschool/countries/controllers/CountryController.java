@@ -25,4 +25,12 @@ public class CountryController {
     result.countryList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
     return result.countryList;
   }
+
+  @GetMapping("/names/size")
+  public ArrayList<Country> getCountriesByNameLength(@RequestParam(value="letters") int letters) {
+    CountryList result =
+            new CountryList(CountriesApplication.countries.search(c -> c.getName().length() >= letters));
+    result.countryList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
+    return result.countryList;
+  }
 }
