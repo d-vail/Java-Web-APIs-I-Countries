@@ -208,4 +208,20 @@ public class CountryList {
     countryList.add(new Country("Antigua and Barbuda",104084,440,32));
     countryList.add(new Country("Seychelles",95702,460,36));
   }
+
+  public CountryList(ArrayList<Country> countries) {
+    countryList.addAll(countries);
+  }
+
+  public ArrayList<Country> search(Search conditions) {
+    ArrayList<Country> results = new ArrayList<>();
+
+    for (Country c : countryList) {
+      if(conditions.test(c)) {
+        results.add(c);
+      }
+    }
+
+    return results;
+  }
 }
