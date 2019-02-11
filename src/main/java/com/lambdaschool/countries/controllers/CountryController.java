@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 @RestController
 public class CountryController {
@@ -37,5 +38,12 @@ public class CountryController {
   @GetMapping("/population/size")
   public ArrayList<Country> getCountriesByPopulation(@RequestParam(value="people") long people) {
     return CountriesApplication.countries.search(c -> c.getPopulation() >= people);
+  }
+
+  @GetMapping("population/min")
+  public Country getMinPopulation() {
+    CountryList countries = new CountryList(CountriesApplication.countries.countryList);
+    countries.countryList.sort(Comparator.comparing(Country::getPopulation));
+    return countries.countryList.get(0);
   }
 }
