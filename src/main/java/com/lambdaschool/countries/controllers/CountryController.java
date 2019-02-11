@@ -33,4 +33,9 @@ public class CountryController {
     result.countryList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
     return result.countryList;
   }
+
+  @GetMapping("/population/size")
+  public ArrayList<Country> getCountriesByPopulation(@RequestParam(value="people") long people) {
+    return CountriesApplication.countries.search(c -> c.getPopulation() >= people);
+  }
 }
