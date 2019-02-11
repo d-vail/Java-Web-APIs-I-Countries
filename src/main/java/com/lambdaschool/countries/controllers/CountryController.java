@@ -40,10 +40,17 @@ public class CountryController {
     return CountriesApplication.countries.search(c -> c.getPopulation() >= people);
   }
 
-  @GetMapping("population/min")
+  @GetMapping("/population/min")
   public Country getMinPopulation() {
     CountryList countries = new CountryList(CountriesApplication.countries.countryList);
     countries.countryList.sort(Comparator.comparing(Country::getPopulation));
+    return countries.countryList.get(0);
+  }
+
+  @GetMapping("/population/max")
+  public Country getMaxPopulation() {
+    CountryList countries = new CountryList(CountriesApplication.countries.countryList);
+    countries.countryList.sort(Comparator.comparing(Country::getPopulation).reversed());
     return countries.countryList.get(0);
   }
 }
