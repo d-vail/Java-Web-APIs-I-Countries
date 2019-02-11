@@ -13,8 +13,9 @@ import java.util.ArrayList;
 public class CountryController {
   @GetMapping("/names/all")
   public ArrayList<Country> getCountries() {
-    CountriesApplication.countries.countryList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
-    return CountriesApplication.countries.countryList;
+    CountryList result = new CountryList(CountriesApplication.countries.countryList);
+    result.countryList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
+    return result.countryList;
   }
 
   @GetMapping("/names/begin")
