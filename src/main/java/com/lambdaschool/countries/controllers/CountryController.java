@@ -53,4 +53,9 @@ public class CountryController {
     countries.countryList.sort(Comparator.comparing(Country::getPopulation).reversed());
     return countries.countryList.get(0);
   }
+
+  @GetMapping("/age/age")
+  public ArrayList<Country> getCountriesByMedianAge(@RequestParam(value="age") int medianAge) {
+    return CountriesApplication.countries.search(c -> c.getMedianAge() >= medianAge);
+  }
 }
