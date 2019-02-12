@@ -12,64 +12,70 @@ import java.util.Comparator;
 
 @RestController
 public class CountryController {
+  private CountryList countryData = CountriesApplication.countries;
+
+  private ArrayList<Country> clone(ArrayList<Country> countries) {
+    CountryList clone = new CountryList(countries);
+    return clone.countryList;
+  }
+
   @GetMapping("/names/all")
   public ArrayList<Country> getCountries() {
-    CountryList result = new CountryList(CountriesApplication.countries.countryList);
-    result.countryList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
-    return result.countryList;
+    ArrayList<Country> result = clone(countryData.countryList);
+    result.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
+    return result;
   }
 
   @GetMapping("/names/begin")
-  public ArrayList<Country> getCountriesBegin(@RequestParam(value="letter") String letter) {
-    CountryList result =
-            new CountryList(CountriesApplication.countries.search(c -> c.getName().startsWith(letter)));
-    result.countryList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
-    return result.countryList;
+  public ArrayList<Country> getCountriesByPrefix(@RequestParam(value="letter") String letter) {
+    ArrayList<Country> result = clone(countryData.search(c -> c.getName().startsWith(letter)));
+    result.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
+    return result;
   }
 
   @GetMapping("/names/size")
   public ArrayList<Country> getCountriesByNameLength(@RequestParam(value="letters") int letters) {
-    CountryList result =
-            new CountryList(CountriesApplication.countries.search(c -> c.getName().length() >= letters));
-    result.countryList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
-    return result.countryList;
+    ArrayList<Country> result =
+            clone(countryData.search(c -> c.getName().length() >= letters));
+    result.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
+    return result;
   }
 
   @GetMapping("/population/size")
   public ArrayList<Country> getCountriesByPopulation(@RequestParam(value="people") long people) {
-    return CountriesApplication.countries.search(c -> c.getPopulation() >= people);
+    return countryData.search(c -> c.getPopulation() >= people);
   }
 
   @GetMapping("/population/min")
-  public Country getMinPopulation() {
-    CountryList countries = new CountryList(CountriesApplication.countries.countryList);
-    countries.countryList.sort(Comparator.comparing(Country::getPopulation));
-    return countries.countryList.get(0);
+  public Country getCountryByMinPopulation() {
+    ArrayList<Country> result = clone(countryData.countryList);
+    result.sort(Comparator.comparing(Country::getPopulation));
+    return result.get(0);
   }
 
   @GetMapping("/population/max")
-  public Country getMaxPopulation() {
-    CountryList countries = new CountryList(CountriesApplication.countries.countryList);
-    countries.countryList.sort(Comparator.comparing(Country::getPopulation).reversed());
-    return countries.countryList.get(0);
+  public Country getCountryByMaxPopulation() {
+    ArrayList<Country> result = clone(countryData.countryList);
+    result.sort(Comparator.comparing(Country::getPopulation).reversed());
+    return result.get(0);
   }
 
   @GetMapping("/age/age")
   public ArrayList<Country> getCountriesByMedianAge(@RequestParam(value="age") int medianAge) {
-    return CountriesApplication.countries.search(c -> c.getMedianAge() >= medianAge);
+    return countryData.search(c -> c.getMedianAge() >= medianAge);
   }
 
   @GetMapping("/age/min")
   public Country getCountryByMinMedianAge() {
-    CountryList countries = new CountryList(CountriesApplication.countries.countryList);
-    countries.countryList.sort(Comparator.comparing(Country::getMedianAge));
-    return countries.countryList.get(0);
+    ArrayList<Country> result = clone(countryData.countryList);
+    result.sort(Comparator.comparing(Country::getMedianAge));
+    return result.get(0);
   }
 
   @GetMapping("/age/max")
   public Country getCountryByMaxMedianAge() {
-    CountryList countries = new CountryList(CountriesApplication.countries.countryList);
-    countries.countryList.sort(Comparator.comparing(Country::getMedianAge).reversed());
-    return countries.countryList.get(0);
+    ArrayList<Country> result = clone(countryData.countryList);
+    result.sort(Comparator.comparing(Country::getMedianAge).reversed());
+    return result.get(0);
   }
 }
