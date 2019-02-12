@@ -65,4 +65,11 @@ public class CountryController {
     countries.countryList.sort(Comparator.comparing(Country::getMedianAge));
     return countries.countryList.get(0);
   }
+
+  @GetMapping("/age/max")
+  public Country getCountryByMaxMedianAge() {
+    CountryList countries = new CountryList(CountriesApplication.countries.countryList);
+    countries.countryList.sort(Comparator.comparing(Country::getMedianAge).reversed());
+    return countries.countryList.get(0);
+  }
 }
