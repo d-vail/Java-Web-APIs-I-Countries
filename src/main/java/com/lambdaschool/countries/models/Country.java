@@ -10,7 +10,9 @@ public class Country {
   private int landMass;
   private int medianAge;
 
-  public Country() {}
+  public Country() {
+    id = COUNTER.incrementAndGet();
+  }
 
   public Country(String name, long population, int landMass, int medianAge) {
     id = COUNTER.incrementAndGet();
@@ -18,6 +20,10 @@ public class Country {
     this.population = population;
     this.landMass = landMass;
     this.medianAge = medianAge;
+  }
+
+  public long getId() {
+    return id;
   }
 
   public String getName() {
